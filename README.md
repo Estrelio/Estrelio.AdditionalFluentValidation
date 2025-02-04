@@ -1,0 +1,3 @@
+# Estrelio.AdditionalFluentValidation
+
+Contains additional FluentValidation rules

@@ -1,0 +1,92 @@
+trigger: none
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  name: Azure Pipelines
+
+variables:
+  - name: "NugetPackages"
+    value: '$(Pipeline.Workspace)/../../.nuget/packages'
+  - name: "RestoreBuildProjects"
+    value: '**/*.csproj'
+  - name: "BuildConfiguration"
+    value: 'Release'
+
+stages:
+  - stage: Build
+    displayName: 'Build Stage'
+    jobs:
+      - job: BuildJob
+        displayName: 'Build Job'
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Install .NET 9 SDK'
+            inputs:
+              version: 9.x
+
+          - task: Cache@2
+            displayName: Cache
+            inputs:
+              key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/**/packages.lock.json'
+              path: '$(NugetPackages)'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore NuGet Packages'
+            inputs:
+              command: 'restore'
+              projects: '$(RestoreBuildProjects)'
+              feedsToUse: 'config'
+              nugetConfigPath: 'nuget.config'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Build Solution'
+            inputs:
+              command: 'build'
+              arguments: '--configuration $(BuildConfiguration)'
+              projects: '$(RestoreBuildProjects)'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Pack'
+            inputs:
+              command: 'pack'
+              packagesToPack: '$(RestoreBuildProjects)'
+              versioningScheme: 'off'
+              arguments: '--configuration $(BuildConfiguration)'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            condition: and(succeeded(), eq(variables['Build.Reason'], 'Manual'))
+
+  - stage: Deploy
+    displayName: 'Deploy Stage'
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables['Build.Reason'], 'Manual'))
+    jobs:
+      - deployment: DeployJob
+        displayName: 'Deploy Job'
+        environment: 'Production'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: |
+                    set -xe
+                    
+                    ls -la
+                    mkdir -p $(System.ArtifactsDirectory)/
+                    cp -r $(Pipeline.Workspace)/drop $(System.ArtifactsDirectory)/.
+                  displayName: 'Copy artifacts'
+
+                - task: DotNetCoreCLI@2
+                  displayName: 'Push NuGet Package to Azure Artifacts Feed'
+                  inputs:
+                    command: 'push'
+                    packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg'
+                    nuGetFeedType: 'internal'
+                    publishVstsFeed: 'e726fcde-7d67-4eae-a3bd-2e376b451c74/efd35f4b-454c-4c39-b71d-0e11931bc06b'
