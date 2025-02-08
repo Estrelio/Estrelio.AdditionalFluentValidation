@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageId>Estrelio.AdditionalFluentValidation</PackageId>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
         <authors>TabooSun</authors>
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
