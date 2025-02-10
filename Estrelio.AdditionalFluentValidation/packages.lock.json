@@ -4,9 +4,9 @@
     "net9.0": {
       "Estrelio.Linter": {
         "type": "Direct",
-        "requested": "[0.0.2, )",
-        "resolved": "0.0.2",
-        "contentHash": "tL1GjkBYXAzCUwxiW0bC0J0VsE8eNJLJ2yB/e8Z2OjQ3c8nY2A6WJhwe2NzmJbXhY0oBLe58FqerbhadQ5Bvmg==",
+        "requested": "[0.0.4, )",
+        "resolved": "0.0.4",
+        "contentHash": "aLqBdY6VCvIOztxeLVpi3u+jyBMHVMwEkWUGbitj2m3ms5g1aCkRf9c6j/+f2x8IYZ+6T8qygchZupz4fSbe4g==",
         "dependencies": {
           "Microsoft.CodeAnalysis": "4.12.0",
           "Microsoft.VisualStudio.Threading": "17.12.19",
