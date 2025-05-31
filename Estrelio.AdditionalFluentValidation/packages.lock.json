@@ -22,9 +22,9 @@
       },
       "libphonenumber-csharp": {
         "type": "Direct",
-        "requested": "[9.0.5, )",
-        "resolved": "9.0.5",
-        "contentHash": "CZFvUbdLGVhNMDtRQ/Vd4hCjpj0zYsnbqVhlpg/Fwota2P6YxDCN4kAOE4tC4AZpNPuHVST0pn5glT/Bza4qew=="
+        "requested": "[9.0.6, )",
+        "resolved": "9.0.6",
+        "contentHash": "xCVdtoYkcnkVhCSZd3llz9Z2A9jM4TZR2c4DpDweGvLkxNBCFkpSXuR6fzeWKThcMjg0oA3fwdOKCU8FK+Krxw=="
       },
       "Humanizer.Core": {
         "type": "Transitive",
