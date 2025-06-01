@@ -20,11 +20,39 @@
         "resolved": "12.0.0",
         "contentHash": "8NVLxtMUXynRHJIX3Hn1ACovaqZIJASufXIIFkD0EUbcd5PmMsL1xUD5h548gCezJ5BzlITaR9CAMrGe29aWpA=="
       },
+      "Grpc.StatusProto": {
+        "type": "Direct",
+        "requested": "[2.71.0, )",
+        "resolved": "2.71.0",
+        "contentHash": "1g2noPz3EsV38obG4VuteYb1pjQthknHmr/nsPZiZa2/WOyjgX00rneefqfalLexE9nxRGoXj2amQ9Bmo5DcMQ==",
+        "dependencies": {
+          "Google.Api.CommonProtos": "2.16.0",
+          "Grpc.Core.Api": "2.71.0"
+        }
+      },
       "libphonenumber-csharp": {
         "type": "Direct",
         "requested": "[9.0.6, )",
         "resolved": "9.0.6",
         "contentHash": "xCVdtoYkcnkVhCSZd3llz9Z2A9jM4TZR2c4DpDweGvLkxNBCFkpSXuR6fzeWKThcMjg0oA3fwdOKCU8FK+Krxw=="
+      },
+      "Google.Api.CommonProtos": {
+        "type": "Transitive",
+        "resolved": "2.16.0",
+        "contentHash": "37MuZrE9AAqHAdYgFLoTHydAiXDRriQZGVKEg6fr6ASnrY5GtauYXnQrGk5x2K3NmYzEXe+wkpaPVmxjb3NKjg==",
+        "dependencies": {
+          "Google.Protobuf": "[3.28.2, 4.0.0)"
+        }
+      },
+      "Google.Protobuf": {
+        "type": "Transitive",
+        "resolved": "3.28.2",
+        "contentHash": "Z86ZKAB+v1B/m0LTM+EVamvZlYw/g3VND3/Gs4M/+aDIxa2JE9YPKjDxTpf0gv2sh26hrve3eI03brxBmzn92g=="
+      },
+      "Grpc.Core.Api": {
+        "type": "Transitive",
+        "resolved": "2.71.0",
+        "contentHash": "QquqUC37yxsDzd1QaDRsH2+uuznWPTS8CVE2Yzwl3CvU4geTNkolQXoVN812M2IwT6zpv3jsZRc9ExJFNFslTg=="
       },
       "Humanizer.Core": {
         "type": "Transitive",
