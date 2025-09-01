@@ -51,7 +51,8 @@ public class CountryCodeValidator<T> : PropertyValidator<T, string>
         {
             CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
             bool cultureInfo = cultures.Any(c =>
-                new RegionInfo(c.Name).ThreeLetterISORegionName.Equals(value,
+                new RegionInfo(c.Name).ThreeLetterISORegionName.Equals(
+                    value,
                     StringComparison.OrdinalIgnoreCase));
             return cultureInfo;
         }
