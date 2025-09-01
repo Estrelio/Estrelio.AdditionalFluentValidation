@@ -35,4 +35,15 @@ public static class EstrelioValidatorExtensions
     {
         return ruleBuilder.SetValidator(new CountryCodeValidator<T>());
     }
+
+    /// <summary>
+    /// Defines a GUID validator.
+    /// </summary>
+    /// <param name="ruleBuilder">The rule builder on which the validator should be defined.</param>
+    /// <typeparam name="T">Type of object being validated.</typeparam>
+    /// <returns>The rule builder with the validator defined.</returns>
+    public static IRuleBuilderOptions<T, string> Guid<T>(this IRuleBuilder<T, string> ruleBuilder)
+    {
+        return ruleBuilder.SetValidator(new GuidValidator<T>());
+    }
 }
