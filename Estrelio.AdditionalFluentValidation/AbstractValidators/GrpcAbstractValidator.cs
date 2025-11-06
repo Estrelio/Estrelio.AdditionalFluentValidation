@@ -23,24 +23,32 @@ public abstract class GrpcAbstractValidator<T> : AbstractValidator<T>
         ValidationContext<T> context,
         ValidationResult result)
     {
-        throw new Google.Rpc.Status()
+        // Convert all validation errors to field violations
+        List<BadRequest.Types.FieldViolation> fieldViolations = result.Errors.Select(error =>
+            new BadRequest.Types.FieldViolation
+            {
+                Field = error.PropertyName,
+                Description = error.ErrorMessage,
+            }).ToList();
+
+        // Create BadRequest with all field violations
+        var badRequest = new BadRequest
+        {
+            FieldViolations = { fieldViolations },
+        };
+
+        // Create Google.Rpc.Status with BadRequest details
+        var status = new Google.Rpc.Status
         {
             Code = (int)Code.InvalidArgument,
-            Message = "Bad request",
+            Message = "Validation failed",
             Details =
             {
-                Any.Pack(new BadRequest()
-                {
-                    FieldViolations =
-                    {
-                        new BadRequest.Types.FieldViolation()
-                        {
-                            Field = context.PropertyPath,
-                            Description = result.Errors.FirstOrDefault()?.ErrorMessage ?? "Validation failed",
-                        },
-                    },
-                }),
+                Any.Pack(badRequest),
             },
-        }.ToRpcException();
+        };
+
+        // Convert to RpcException
+        throw status.ToRpcException();
     }
 }
