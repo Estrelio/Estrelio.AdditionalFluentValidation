@@ -881,3 +881,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+
+Estrelio.AdditionalFluentValidation/.DS_Store
