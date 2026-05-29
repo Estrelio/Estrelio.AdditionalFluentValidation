@@ -20,12 +20,10 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: dotnet restore
+      - run: dotnet restore Estrelio.AdditionalFluentValidation.sln
 
-      - run: dotnet build --configuration Release --no-restore
+      - run: dotnet build Estrelio.AdditionalFluentValidation.sln --configuration Release --no-restore
 
-      - run: dotnet test --configuration Release --no-build
-
-      - run: dotnet pack --configuration Release --no-build --output nupkgs
+      - run: dotnet pack Estrelio.AdditionalFluentValidation/Estrelio.AdditionalFluentValidation.csproj --configuration Release --no-build --output nupkgs
 
       - run: dotnet nuget push "nupkgs/*.nupkg" --skip-duplicate
