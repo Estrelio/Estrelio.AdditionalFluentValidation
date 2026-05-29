@@ -16,9 +16,9 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.x'
-          source-url: https://nuget.pkg.github.com/Estrelio/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add GitHub Packages source
+        run: dotnet nuget add source https://nuget.pkg.github.com/Estrelio/index.json --name github-estrelio
 
       - run: dotnet restore Estrelio.AdditionalFluentValidation.sln
 
@@ -26,4 +26,4 @@ jobs:
 
       - run: dotnet pack Estrelio.AdditionalFluentValidation/Estrelio.AdditionalFluentValidation.csproj --configuration Release --no-build --output nupkgs
 
-      - run: dotnet nuget push "nupkgs/*.nupkg" --skip-duplicate
+      - run: dotnet nuget push "nupkgs/*.nupkg" --source github-estrelio --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
