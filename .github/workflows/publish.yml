@@ -10,12 +10,15 @@ jobs:
     permissions:
       packages: write
       contents: read
+    env:
+      NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.x'
+          source-url: https://nuget.pkg.github.com/Estrelio/index.json
 
       - run: dotnet restore Estrelio.AdditionalFluentValidation.sln
 
@@ -23,4 +26,4 @@ jobs:
 
       - run: dotnet pack Estrelio.AdditionalFluentValidation/Estrelio.AdditionalFluentValidation.csproj --configuration Release --no-build --output nupkgs
 
-      - run: dotnet nuget push "nupkgs/*.nupkg" --source github-estrelio --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      - run: dotnet nuget push "nupkgs/*.nupkg" --skip-duplicate
