@@ -1,0 +1,29 @@
+name: Publish NuGet Package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Pack & Publish
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x'
+          source-url: https://nuget.pkg.github.com/Estrelio/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: dotnet restore Estrelio.AdditionalFluentValidation.sln
+
+      - run: dotnet build Estrelio.AdditionalFluentValidation.sln --configuration Release --no-restore
+
+      - run: dotnet pack Estrelio.AdditionalFluentValidation/Estrelio.AdditionalFluentValidation.csproj --configuration Release --no-build --output nupkgs
+
+      - run: dotnet nuget push "nupkgs/*.nupkg" --skip-duplicate
