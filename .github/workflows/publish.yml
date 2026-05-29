@@ -17,9 +17,6 @@ jobs:
         with:
           dotnet-version: '9.x'
 
-      - name: Add GitHub Packages source
-        run: dotnet nuget add source https://nuget.pkg.github.com/Estrelio/index.json --name github-estrelio
-
       - run: dotnet restore Estrelio.AdditionalFluentValidation.sln
 
       - run: dotnet build Estrelio.AdditionalFluentValidation.sln --configuration Release --no-restore
